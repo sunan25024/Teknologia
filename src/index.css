@@ -7,6 +7,8 @@ html {
   height: 100%;
   height: calc(var(--vh, 1vh) * 100);
   overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
 }
 
 body {
@@ -25,11 +27,15 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  position: fixed;
+  width: 100%;
 }
 
 #root {
   height: 100%;
   height: calc(var(--vh, 1vh) * 100);
+  width: 100%;
+  position: relative;
 }
 
 /* Safe area support for mobile devices */
@@ -57,6 +63,11 @@ button, a, [role="button"] {
   user-select: none;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 input, textarea, select {
@@ -64,6 +75,9 @@ input, textarea, select {
   -moz-user-select: text;
   -ms-user-select: text;
   user-select: text;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 /* Prevent zoom on input focus on iOS */
@@ -74,10 +88,28 @@ input, textarea, select {
   input[type="password"],
   input[type="search"],
   input[type="url"],
+  input[type="date"],
+  input[type="time"],
   textarea,
   select {
     font-size: 16px !important;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
   }
+}
+
+/* Mobile viewport fixes */
+@supports (-webkit-touch-callout: none) {
+  .mobile-fix {
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+}
+
+/* Scrolling optimizations */
+* {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
 }
 
 /* Custom animations */
@@ -118,23 +150,9 @@ input, textarea, select {
   animation: gradient-shift 3s ease infinite;
 }
 
-/* Responsive utilities */
-@media (max-width: 640px) {
-  .text-responsive {
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
-  }
-}
-
-@media (max-width: 768px) {
-  .container-responsive {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-}
-
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
@@ -344,6 +362,10 @@ input, textarea, select {
   .mobile-landscape-compact {
     padding: 0.5rem;
   }
+  
+  .mobile-landscape-small {
+    font-size: 0.875rem;
+  }
 }
 
 /* iOS specific fixes */
@@ -351,5 +373,169 @@ input, textarea, select {
   .ios-fix {
     -webkit-appearance: none;
     border-radius: 0;
+  }
+  
+  input[type="date"],
+  input[type="time"],
+  input[type="datetime-local"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+}
+
+/* Android specific fixes */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  select {
+    background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'><path fill='%23666' d='M2 0L0 2h4zm0 5L0 3h4z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 0.7rem center;
+    background-size: 0.65rem auto;
+  }
+}
+
+/* Responsive text sizes */
+@media (max-width: 640px) {
+  .text-responsive-sm {
+    font-size: 0.875rem;
+  }
+  
+  .text-responsive-base {
+    font-size: 1rem;
+  }
+  
+  .text-responsive-lg {
+    font-size: 1.125rem;
+  }
+  
+  .text-responsive-xl {
+    font-size: 1.25rem;
+  }
+  
+  .text-responsive-2xl {
+    font-size: 1.5rem;
+  }
+}
+
+/* Touch target improvements */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Prevent text selection on UI elements */
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Allow text selection on content */
+.select-text {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* Improved focus visibility */
+.focus-visible:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Better button states */
+.btn-active {
+  transform: scale(0.95);
+}
+
+/* Smooth scrolling for containers */
+.smooth-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Hide scrollbars on mobile */
+@media (max-width: 768px) {
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Improved modal backdrop */
+.modal-backdrop {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Better loading states */
+.loading-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Improved accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .loading-shimmer {
+    animation: none;
+    background: #f0f0f0;
+  }
+}
+
+/* Better form styling */
+.form-input {
+  transition: all 0.2s ease-in-out;
+}
+
+.form-input:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Improved card interactions */
+.card-interactive {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-interactive:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.card-interactive:active {
+  transform: translateY(-2px);
+}
+
+/* Better spacing for mobile */
+@media (max-width: 640px) {
+  .mobile-spacing {
+    padding: 1rem;
+  }
+  
+  .mobile-spacing-sm {
+    padding: 0.5rem;
+  }
+  
+  .mobile-spacing-lg {
+    padding: 1.5rem;
   }
 }
