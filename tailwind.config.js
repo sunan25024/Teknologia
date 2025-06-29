@@ -67,6 +67,10 @@ export default {
         '18': '4.5rem',
         '88': '22rem',
         '128': '32rem',
+        'safe-top': 'env(safe-area-inset-top)',
+        'safe-bottom': 'env(safe-area-inset-bottom)',
+        'safe-left': 'env(safe-area-inset-left)',
+        'safe-right': 'env(safe-area-inset-right)',
       },
       borderRadius: {
         '4xl': '2rem',
@@ -82,6 +86,8 @@ export default {
       screens: {
         'xs': '475px',
         '3xl': '1600px',
+        'touch': { 'raw': '(hover: none)' },
+        'no-touch': { 'raw': '(hover: hover)' },
       },
       zIndex: {
         '60': '60',
@@ -102,10 +108,16 @@ export default {
         '4xl': '72px',
         '5xl': '96px',
       },
+      minHeight: {
+        'screen-safe': 'calc(var(--vh, 1vh) * 100)',
+      },
+      height: {
+        'screen-safe': 'calc(var(--vh, 1vh) * 100)',
+      },
     },
   },
   plugins: [
-    function({ addUtilities }) {
+    function({ addUtilities, addComponents }) {
       const newUtilities = {
         '.text-shadow': {
           textShadow: '0 2px 4px rgba(0,0,0,0.1)',
@@ -125,8 +137,49 @@ export default {
         '.transform-gpu': {
           transform: 'translate3d(0, 0, 0)',
         },
+        '.touch-manipulation': {
+          'touch-action': 'manipulation',
+        },
+        '.no-tap-highlight': {
+          '-webkit-tap-highlight-color': 'transparent',
+        },
+        '.no-select': {
+          '-webkit-user-select': 'none',
+          '-moz-user-select': 'none',
+          '-ms-user-select': 'none',
+          'user-select': 'none',
+        },
+        '.select-text': {
+          '-webkit-user-select': 'text',
+          '-moz-user-select': 'text',
+          '-ms-user-select': 'text',
+          'user-select': 'text',
+        },
       }
+      
+      const newComponents = {
+        '.btn-mobile': {
+          'min-height': '44px',
+          'min-width': '44px',
+          'touch-action': 'manipulation',
+          '-webkit-tap-highlight-color': 'transparent',
+        },
+        '.input-mobile': {
+          'font-size': '16px',
+          '@media (max-width: 768px)': {
+            'font-size': '16px !important',
+          },
+        },
+        '.safe-area-inset': {
+          'padding-top': 'env(safe-area-inset-top)',
+          'padding-right': 'env(safe-area-inset-right)',
+          'padding-bottom': 'env(safe-area-inset-bottom)',
+          'padding-left': 'env(safe-area-inset-left)',
+        },
+      }
+      
       addUtilities(newUtilities)
+      addComponents(newComponents)
     }
   ],
 };

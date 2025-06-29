@@ -25,7 +25,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
     { id: 'spreadsheet' as ViewType, icon: Table, label: 'Data' },
     { id: 'camera' as ViewType, icon: Camera, label: 'Camera', isCenter: true },
     { id: 'whatsapp' as ViewType, icon: MessageCircle, label: 'Chat' },
-    { id: 'settings' as ViewType, icon: SettingsIcon, label: 'Pengaturan' },
+    { id: 'settings' as ViewType, icon: SettingsIcon, label: 'Settings' },
   ];
 
   return (
@@ -33,14 +33,14 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed bottom-0 left-0 right-0 z-50 px-4 py-3 backdrop-blur-2xl border-t ${
+      className={`fixed bottom-0 left-0 right-0 z-50 px-2 sm:px-4 py-2 sm:py-3 backdrop-blur-2xl border-t safe-area-pb ${
         isDarkMode 
           ? 'bg-slate-900/80 border-slate-700/50' 
           : 'bg-white/80 border-white/50'
       }`}
     >
       <div className="max-w-md mx-auto">
-        <div className="flex items-center justify-around py-2">
+        <div className="flex items-center justify-around py-1 sm:py-2">
           {menuItems.map((item, index) => {
             const Icon = item.icon;
             const isActive = currentView === item.id;
@@ -57,8 +57,8 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
                 onClick={() => setCurrentView(item.id)}
                 className={`relative flex flex-col items-center rounded-2xl transition-all duration-300 ${
                   isCenter 
-                    ? 'p-4 transform -translate-y-2' 
-                    : 'p-3'
+                    ? 'p-2 sm:p-4 transform -translate-y-1 sm:-translate-y-2' 
+                    : 'p-2 sm:p-3'
                 } ${
                   isActive 
                     ? 'transform -translate-y-1' 
@@ -87,8 +87,8 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
                 {/* Icon */}
                 <div className={`relative z-10 rounded-xl transition-all duration-300 ${
                   isCenter 
-                    ? 'p-3' 
-                    : 'p-2'
+                    ? 'p-2 sm:p-3' 
+                    : 'p-1 sm:p-2'
                 } ${
                   isActive || isCenter
                     ? 'text-white' 
@@ -96,7 +96,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
                       ? 'text-slate-400 hover:text-white' 
                       : 'text-slate-600 hover:text-slate-800'
                 }`}>
-                  <Icon className={`${isCenter ? 'w-7 h-7' : 'w-5 h-5'}`} />
+                  <Icon className={`${isCenter ? 'w-5 h-5 sm:w-7 sm:h-7' : 'w-4 h-4 sm:w-5 sm:h-5'}`} />
                 </div>
                 
                 {/* Label */}
@@ -106,7 +106,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
                     : isDarkMode 
                       ? 'text-slate-400' 
                       : 'text-slate-600'
-                }`}>
+                } hidden xs:block`}>
                   {item.label}
                 </span>
 
@@ -115,7 +115,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-white rounded-full"
+                    className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full"
                   />
                 )}
 

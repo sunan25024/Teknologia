@@ -1,6 +1,6 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Search, Bell, User, Moon, Sun, Zap } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Search, Bell, User, Moon, Sun, Zap, Menu, X } from 'lucide-react';
 import { ViewType } from '../App';
 
 interface TopNavigationProps {
@@ -16,6 +16,8 @@ const TopNavigation: React.FC<TopNavigationProps> = ({
   isDarkMode, 
   setIsDarkMode 
 }) => {
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
+
   const getViewTitle = (view: ViewType) => {
     const titles = {
       dashboard: 'Dashboard',
@@ -25,7 +27,7 @@ const TopNavigation: React.FC<TopNavigationProps> = ({
       camera: 'Camera',
       spreadsheet: 'Data Management',
       whatsapp: 'WhatsApp',
-      settings: 'Pengaturan'
+      settings: 'Settings'
     };
     return titles[view];
   };
@@ -35,7 +37,7 @@ const TopNavigation: React.FC<TopNavigationProps> = ({
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`sticky top-0 z-50 px-4 py-4 backdrop-blur-2xl border-b ${
+      className={`sticky top-0 z-50 px-3 sm:px-4 py-3 sm:py-4 backdrop-blur-2xl border-b safe-area-pt ${
         isDarkMode 
           ? 'bg-slate-900/60 border-slate-700/50' 
           : 'bg-white/60 border-white/50'
@@ -46,16 +48,16 @@ const TopNavigation: React.FC<TopNavigationProps> = ({
         <motion.div 
           whileHover={{ scale: 1.05 }}
           onClick={() => setCurrentView('dashboard')}
-          className="flex items-center space-x-3 cursor-pointer"
+          className="flex items-center space-x-2 sm:space-x-3 cursor-pointer flex-shrink-0"
         >
           <div className="relative">
-            <div className="w-12 h-12 bg-gradient-to-r from-violet-500 via-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg">
-              <Zap className="w-6 h-6 text-white" />
+            <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-r from-violet-500 via-purple-500 to-pink-500 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg">
+              <Zap className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
             </div>
-            <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-orange-400 to-red-400 rounded-full animate-pulse"></div>
+            <div className="absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 w-2 h-2 sm:w-4 sm:h-4 bg-gradient-to-r from-orange-400 to-red-400 rounded-full animate-pulse"></div>
           </div>
-          <div>
-            <h1 className={`text-xl font-bold ${
+          <div className="hidden xs:block">
+            <h1 className={`text-sm sm:text-xl font-bold ${
               isDarkMode ? 'text-white' : 'text-slate-800'
             }`}>
               ProductiveHub
@@ -68,12 +70,12 @@ const TopNavigation: React.FC<TopNavigationProps> = ({
           </div>
         </motion.div>
 
-        {/* Search Bar */}
+        {/* Desktop Search Bar */}
         <motion.div 
           initial={{ width: 0, opacity: 0 }}
           animate={{ width: 'auto', opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="hidden md:flex flex-1 max-w-md mx-8"
+          className="hidden lg:flex flex-1 max-w-md mx-8"
         >
           <div className="relative w-full">
             <Search className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 ${
@@ -91,39 +93,102 @@ const TopNavigation: React.FC<TopNavigationProps> = ({
           </div>
         </motion.div>
 
+        {/* Mobile Search Overlay */}
+        <AnimatePresence>
+          {showMobileSearch && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-start justify-center pt-20 px-4 lg:hidden"
+            >
+              <motion.div
+                initial={{ y: -20 }}
+                animate={{ y: 0 }}
+                exit={{ y: -20 }}
+                className={`w-full max-w-md rounded-2xl border shadow-2xl ${
+                  isDarkMode 
+                    ? 'bg-slate-800/90 border-slate-700' 
+                    : 'bg-white/90 border-white/50'
+                }`}
+              >
+                <div className="p-4">
+                  <div className="relative">
+                    <Search className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 ${
+                      isDarkMode ? 'text-slate-400' : 'text-slate-500'
+                    }`} />
+                    <input
+                      type="text"
+                      placeholder="Search anything..."
+                      autoFocus
+                      className={`w-full pl-12 pr-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:ring-violet-500 focus:border-transparent ${
+                        isDarkMode 
+                          ? 'bg-slate-700/60 border-slate-600 text-white placeholder-slate-400' 
+                          : 'bg-white/80 border-white/50 text-slate-800 placeholder-slate-500'
+                      }`}
+                    />
+                  </div>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setShowMobileSearch(false)}
+                    className="w-full mt-3 px-4 py-2 bg-gradient-to-r from-violet-500 to-purple-600 text-white rounded-xl font-medium"
+                  >
+                    Close
+                  </motion.button>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Action Buttons */}
         <motion.div 
           initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="flex items-center space-x-3"
+          className="flex items-center space-x-1 sm:space-x-3"
         >
+          {/* Mobile Search Button */}
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => setShowMobileSearch(true)}
+            className={`lg:hidden p-2 sm:p-3 rounded-xl sm:rounded-2xl transition-all duration-300 ${
+              isDarkMode 
+                ? 'bg-slate-800/60 text-slate-300 hover:bg-slate-700/60' 
+                : 'bg-white/60 text-slate-600 hover:bg-white/80'
+            }`}
+          >
+            <Search className="w-4 h-4 sm:w-5 sm:h-5" />
+          </motion.button>
+
           {/* Theme Toggle */}
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => setIsDarkMode(!isDarkMode)}
-            className={`p-3 rounded-2xl transition-all duration-300 ${
+            className={`p-2 sm:p-3 rounded-xl sm:rounded-2xl transition-all duration-300 ${
               isDarkMode 
                 ? 'bg-slate-800/60 text-yellow-400 hover:bg-slate-700/60' 
                 : 'bg-white/60 text-slate-600 hover:bg-white/80'
             }`}
           >
-            {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            {isDarkMode ? <Sun className="w-4 h-4 sm:w-5 sm:h-5" /> : <Moon className="w-4 h-4 sm:w-5 sm:h-5" />}
           </motion.button>
 
           {/* Notifications */}
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            className={`relative p-3 rounded-2xl transition-all duration-300 ${
+            className={`relative p-2 sm:p-3 rounded-xl sm:rounded-2xl transition-all duration-300 ${
               isDarkMode 
                 ? 'bg-slate-800/60 text-slate-300 hover:bg-slate-700/60' 
                 : 'bg-white/60 text-slate-600 hover:bg-white/80'
             }`}
           >
-            <Bell className="w-5 h-5" />
-            <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+            <Bell className="w-4 h-4 sm:w-5 sm:h-5" />
+            <div className="absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full animate-pulse"></div>
           </motion.button>
 
           {/* Profile */}
@@ -131,13 +196,13 @@ const TopNavigation: React.FC<TopNavigationProps> = ({
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => setCurrentView('settings')}
-            className={`p-3 rounded-2xl transition-all duration-300 ${
+            className={`p-2 sm:p-3 rounded-xl sm:rounded-2xl transition-all duration-300 ${
               isDarkMode 
                 ? 'bg-slate-800/60 text-slate-300 hover:bg-slate-700/60' 
                 : 'bg-white/60 text-slate-600 hover:bg-white/80'
             }`}
           >
-            <User className="w-5 h-5" />
+            <User className="w-4 h-4 sm:w-5 sm:h-5" />
           </motion.button>
         </motion.div>
       </div>
