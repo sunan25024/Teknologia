@@ -1,12 +1,10 @@
 const CACHE_NAME = 'productivehub-v1.0.0';
 const urlsToCache = [
   '/',
-  '/static/js/bundle.js',
-  '/static/css/main.css',
   '/manifest.json',
+  '/icon-72x72.png',
   '/icon-192x192.png',
-  '/icon-512x512.png',
-  'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap'
+  '/icon-512x512.png'
 ];
 
 // Install event
@@ -15,7 +13,24 @@ self.addEventListener('install', (event) => {
     caches.open(CACHE_NAME)
       .then((cache) => {
         console.log('Opened cache');
-        return cache.addAll(urlsToCache);
+        // Only cache files that actually exist
+        return cache.addAll(urlsToCache.filter(url => {
+          // Skip files that might not exist
+          if (url.includes('icon-') && !url.includes('icon-72x72.png')) {
+            return false;
+          }
+          return true;
+        }));
+      })
+      .catch((error) => {
+        console.log('Cache addAll failed:', error);
+        // Fallback: cache essential files only
+        return caches.open(CACHE_NAME).then(cache => {
+          return cache.addAll([
+            '/',
+            '/manifest.json'
+          ]);
+        });
       })
   );
   self.skipWaiting();
@@ -45,6 +60,11 @@ self.addEventListener('fetch', (event) => {
             });
 
           return response;
+        }).catch(() => {
+          // Return offline page or fallback
+          if (event.request.destination === 'document') {
+            return caches.match('/');
+          }
         });
       })
   );
@@ -78,7 +98,7 @@ self.addEventListener('sync', (event) => {
 self.addEventListener('push', (event) => {
   const options = {
     body: event.data ? event.data.text() : 'New notification from ProductiveHub',
-    icon: '/icon-192x192.png',
+    icon: '/icon-72x72.png',
     badge: '/icon-72x72.png',
     vibrate: [100, 50, 100],
     data: {
@@ -89,12 +109,12 @@ self.addEventListener('push', (event) => {
       {
         action: 'explore',
         title: 'Open App',
-        icon: '/icon-192x192.png'
+        icon: '/icon-72x72.png'
       },
       {
         action: 'close',
         title: 'Close',
-        icon: '/icon-192x192.png'
+        icon: '/icon-72x72.png'
       }
     ]
   };
