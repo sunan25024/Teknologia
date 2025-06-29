@@ -194,25 +194,25 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
   };
 
   return (
-    <div className="h-full overflow-y-auto mobile-container">
+    <div className="p-3 sm:p-6 h-full overflow-y-auto">
       {/* Welcome Section */}
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-4 sm:mb-8"
+        className="mb-6 sm:mb-8"
       >
-        <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between space-y-4 sm:space-y-0">
           <div>
-            <h1 className="mobile-header sm:text-4xl font-bold bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+            <h1 className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
               Welcome Back!
             </h1>
-            <p className="mobile-subheader sm:text-lg text-slate-600 dark:text-slate-400">Here's what's happening with your productivity today.</p>
+            <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-lg">Here's what's happening with your productivity today.</p>
           </div>
           <motion.div 
             whileHover={{ scale: 1.05, rotate: 5 }}
-            className="flex items-center space-x-2 bg-gradient-to-r from-green-400 to-emerald-500 text-white rounded-lg sm:rounded-2xl px-3 py-2 shadow-lg self-start"
+            className="flex items-center space-x-2 bg-gradient-to-r from-green-400 to-emerald-500 text-white rounded-xl sm:rounded-2xl px-3 sm:px-4 py-2 shadow-lg self-start sm:self-auto"
           >
-            <Activity className="w-4 h-4" />
+            <Activity className="w-4 h-4 sm:w-5 sm:h-5" />
             <span className="text-xs sm:text-sm font-medium">All systems operational</span>
           </motion.div>
         </div>
@@ -223,7 +223,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="responsive-grid mb-4 sm:mb-8"
+        className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8"
       >
         {stats.map((stat, index) => {
           const Icon = stat.icon;
@@ -231,26 +231,26 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             <motion.div
               key={index}
               variants={itemVariants}
-              whileHover={{ scale: 1.02, y: -2 }}
+              whileHover={{ scale: 1.05, y: -5, rotateY: 5 }}
               className="relative group"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-purple-600 rounded-xl sm:rounded-3xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-300"></div>
-              <div className="relative bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-xl sm:rounded-3xl shadow-xl border border-white/20 dark:border-slate-700/20 mobile-card hover:shadow-2xl transition-all duration-300 overflow-hidden">
-                <div className="absolute top-0 right-0 w-8 sm:w-32 h-8 sm:h-32 bg-gradient-to-br from-white/10 to-transparent rounded-full -translate-y-4 sm:-translate-y-16 translate-x-4 sm:translate-x-16"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-purple-600 rounded-2xl sm:rounded-3xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-300"></div>
+              <div className="relative bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-xl border border-white/20 dark:border-slate-700/20 p-3 sm:p-6 hover:shadow-2xl transition-all duration-300 overflow-hidden">
+                <div className="absolute top-0 right-0 w-16 sm:w-32 h-16 sm:h-32 bg-gradient-to-br from-white/10 to-transparent rounded-full -translate-y-8 sm:-translate-y-16 translate-x-8 sm:translate-x-16"></div>
                 
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 relative z-10">
-                  <div className={`bg-gradient-to-r ${stat.color} rounded-lg sm:rounded-2xl p-2 sm:p-3 shadow-lg mb-2 sm:mb-0 self-start`}>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 sm:mb-4 relative z-10">
+                  <div className={`bg-gradient-to-r ${stat.color} rounded-xl sm:rounded-2xl p-2 sm:p-3 shadow-lg mb-2 sm:mb-0 self-start`}>
                     <Icon className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
                   </div>
-                  <div className="flex items-center text-green-600 text-xs font-semibold">
-                    <ArrowUp className="w-3 h-3 mr-1" />
+                  <div className="flex items-center text-green-600 text-xs sm:text-sm font-semibold">
+                    <ArrowUp className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                     {stat.change}
                   </div>
                 </div>
                 
                 <div className="relative z-10">
-                  <p className="text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">{stat.label}</p>
-                  <p className="text-lg sm:text-3xl font-bold text-slate-800 dark:text-white">{stat.value}</p>
+                  <p className="text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">{stat.label}</p>
+                  <p className="text-xl sm:text-3xl font-bold text-slate-800 dark:text-white">{stat.value}</p>
                 </div>
               </div>
             </motion.div>
@@ -268,40 +268,40 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
           className="lg:col-span-2 space-y-4 sm:space-y-6"
         >
           {/* Notes Card */}
-          <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-xl sm:rounded-3xl shadow-xl border border-white/20 dark:border-slate-700/20 mobile-card">
-            <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:items-center justify-between mb-4">
+          <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-xl border border-white/20 dark:border-slate-700/20 p-4 sm:p-8">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 space-y-3 sm:space-y-0">
               <div className="flex items-center space-x-3">
-                <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-lg sm:rounded-2xl p-2 sm:p-3 shadow-lg">
+                <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl sm:rounded-2xl p-2 sm:p-3 shadow-lg">
                   <StickyNote className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
                 </div>
                 <div>
                   <h2 className="text-lg sm:text-2xl font-bold text-slate-800 dark:text-white">Smart Notes</h2>
-                  <p className="text-slate-600 dark:text-slate-400 text-sm">Organize your thoughts beautifully</p>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base">Organize your thoughts beautifully</p>
                 </div>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 sm:space-x-3">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => onNavigate('notes')}
-                  className="flex items-center px-3 py-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-all duration-300 font-medium text-xs"
+                  className="flex items-center px-3 sm:px-4 py-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg sm:rounded-xl hover:bg-slate-300 dark:hover:bg-slate-600 transition-all duration-300 font-medium text-xs sm:text-sm"
                 >
-                  <ExternalLink className="w-3 h-3 mr-1" />
+                  <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
                   View All
                 </motion.button>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setShowNotesModal(true)}
-                  className="flex items-center px-3 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-xs"
+                  className="flex items-center px-3 sm:px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-xs sm:text-sm"
                 >
-                  <Plus className="w-3 h-3 mr-1" />
+                  <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
                   New Note
                 </motion.button>
               </div>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               {notes.slice(0, 4).map((note, index) => (
                 <motion.div
                   key={note.id}
@@ -310,10 +310,10 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                   transition={{ delay: index * 0.1 }}
                   whileHover={{ scale: 1.02, y: -2 }}
                   onClick={() => onNavigate('notes')}
-                  className={`bg-gradient-to-r ${note.color} rounded-lg sm:rounded-2xl p-3 text-white shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer`}
+                  className={`bg-gradient-to-r ${note.color} rounded-xl sm:rounded-2xl p-3 sm:p-4 text-white shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer`}
                 >
-                  <h3 className="font-bold text-sm sm:text-lg mb-1 truncate">{note.title}</h3>
-                  <p className="text-white/90 text-xs line-clamp-2 mb-2">{note.content}</p>
+                  <h3 className="font-bold text-sm sm:text-lg mb-1 sm:mb-2 truncate">{note.title}</h3>
+                  <p className="text-white/90 text-xs sm:text-sm line-clamp-2 mb-2 sm:mb-3">{note.content}</p>
                   <p className="text-white/70 text-xs">{note.createdAt}</p>
                 </motion.div>
               ))}
@@ -321,40 +321,40 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
           </div>
 
           {/* Reports Card */}
-          <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-xl sm:rounded-3xl shadow-xl border border-white/20 dark:border-slate-700/20 mobile-card">
-            <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:items-center justify-between mb-4">
+          <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-xl border border-white/20 dark:border-slate-700/20 p-4 sm:p-8">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 space-y-3 sm:space-y-0">
               <div className="flex items-center space-x-3">
-                <div className="bg-gradient-to-r from-emerald-500 to-green-500 rounded-lg sm:rounded-2xl p-2 sm:p-3 shadow-lg">
+                <div className="bg-gradient-to-r from-emerald-500 to-green-500 rounded-xl sm:rounded-2xl p-2 sm:p-3 shadow-lg">
                   <FileText className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
                 </div>
                 <div>
                   <h2 className="text-lg sm:text-2xl font-bold text-slate-800 dark:text-white">Dynamic Reports</h2>
-                  <p className="text-slate-600 dark:text-slate-400 text-sm">Create comprehensive reports</p>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base">Create comprehensive reports</p>
                 </div>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 sm:space-x-3">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => onNavigate('reports')}
-                  className="flex items-center px-3 py-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-all duration-300 font-medium text-xs"
+                  className="flex items-center px-3 sm:px-4 py-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg sm:rounded-xl hover:bg-slate-300 dark:hover:bg-slate-600 transition-all duration-300 font-medium text-xs sm:text-sm"
                 >
-                  <ExternalLink className="w-3 h-3 mr-1" />
+                  <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
                   View All
                 </motion.button>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setShowReportsModal(true)}
-                  className="flex items-center px-3 py-2 bg-gradient-to-r from-emerald-500 to-green-500 text-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-xs"
+                  className="flex items-center px-3 sm:px-4 py-2 bg-gradient-to-r from-emerald-500 to-green-500 text-white rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-xs sm:text-sm"
                 >
-                  <Plus className="w-3 h-3 mr-1" />
+                  <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
                   New Report
                 </motion.button>
               </div>
             </div>
             
-            <div className="space-y-3">
+            <div className="space-y-3 sm:space-y-4">
               {reports.slice(0, 3).map((report, index) => (
                 <motion.div
                   key={report.id}
@@ -363,13 +363,13 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                   transition={{ delay: index * 0.1 }}
                   whileHover={{ scale: 1.02, x: 4 }}
                   onClick={() => onNavigate('reports')}
-                  className="bg-white/60 dark:bg-slate-700/60 rounded-lg sm:rounded-2xl p-3 border border-white/20 dark:border-slate-600/20 hover:shadow-lg transition-all duration-300 cursor-pointer"
+                  className="bg-white/60 dark:bg-slate-700/60 rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-white/20 dark:border-slate-600/20 hover:shadow-lg transition-all duration-300 cursor-pointer"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-bold text-slate-800 dark:text-white mb-1 text-sm truncate">{report.title}</h3>
-                      <p className="text-slate-600 dark:text-slate-400 text-xs mb-2 line-clamp-2">{report.description}</p>
-                      <div className="flex items-center space-x-2 text-xs text-slate-500 dark:text-slate-400">
+                      <h3 className="font-bold text-slate-800 dark:text-white mb-1 text-sm sm:text-base truncate">{report.title}</h3>
+                      <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mb-2 line-clamp-2">{report.description}</p>
+                      <div className="flex items-center space-x-2 sm:space-x-3 text-xs text-slate-500 dark:text-slate-400">
                         <span>{report.createdAt}</span>
                         <span className={`px-2 py-1 rounded-full font-medium text-xs ${
                           report.status === 'completed' 
@@ -380,7 +380,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                         </span>
                       </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-slate-400 ml-2" />
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 ml-2" />
                   </div>
                 </motion.div>
               ))}
@@ -388,40 +388,40 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
           </div>
 
           {/* Calendar Card */}
-          <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-xl sm:rounded-3xl shadow-xl border border-white/20 dark:border-slate-700/20 mobile-card">
-            <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:items-center justify-between mb-4">
+          <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-xl border border-white/20 dark:border-slate-700/20 p-4 sm:p-8">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 space-y-3 sm:space-y-0">
               <div className="flex items-center space-x-3">
-                <div className="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg sm:rounded-2xl p-2 sm:p-3 shadow-lg">
+                <div className="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl sm:rounded-2xl p-2 sm:p-3 shadow-lg">
                   <CalendarDays className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
                 </div>
                 <div>
                   <h2 className="text-lg sm:text-2xl font-bold text-slate-800 dark:text-white">Smart Calendar</h2>
-                  <p className="text-slate-600 dark:text-slate-400 text-sm">Schedule and manage activities</p>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base">Schedule and manage activities</p>
                 </div>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 sm:space-x-3">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => onNavigate('calendar')}
-                  className="flex items-center px-3 py-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-all duration-300 font-medium text-xs"
+                  className="flex items-center px-3 sm:px-4 py-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg sm:rounded-xl hover:bg-slate-300 dark:hover:bg-slate-600 transition-all duration-300 font-medium text-xs sm:text-sm"
                 >
-                  <ExternalLink className="w-3 h-3 mr-1" />
+                  <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
                   View All
                 </motion.button>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setShowCalendarModal(true)}
-                  className="flex items-center px-3 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-xs"
+                  className="flex items-center px-3 sm:px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-xs sm:text-sm"
                 >
-                  <Plus className="w-3 h-3 mr-1" />
+                  <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
                   New Event
                 </motion.button>
               </div>
             </div>
             
-            <div className="space-y-2">
+            <div className="space-y-2 sm:space-y-3">
               {events.slice(0, 4).map((event, index) => (
                 <motion.div
                   key={event.id}
@@ -430,12 +430,12 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                   transition={{ delay: index * 0.1 }}
                   whileHover={{ scale: 1.02, x: 4 }}
                   onClick={() => onNavigate('calendar')}
-                  className={`bg-gradient-to-r ${event.color} rounded-lg sm:rounded-2xl p-3 text-white shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer`}
+                  className={`bg-gradient-to-r ${event.color} rounded-xl sm:rounded-2xl p-3 sm:p-4 text-white shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-bold mb-1 text-sm truncate">{event.title}</h3>
-                      <div className="flex flex-wrap items-center gap-2 text-white/90 text-xs">
+                      <h3 className="font-bold mb-1 text-sm sm:text-base truncate">{event.title}</h3>
+                      <div className="flex flex-wrap items-center gap-2 text-white/90 text-xs sm:text-sm">
                         <span>{event.date}</span>
                         <span>{event.time}</span>
                         <span className="px-2 py-1 bg-white/20 rounded-full text-xs font-medium capitalize">
@@ -443,7 +443,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                         </span>
                       </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-white/80 ml-2" />
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-white/80 ml-2" />
                   </div>
                 </motion.div>
               ))}
@@ -459,13 +459,13 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
           className="space-y-4 sm:space-y-6"
         >
           {/* Recent Activity */}
-          <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-xl sm:rounded-3xl shadow-xl border border-white/20 dark:border-slate-700/20 mobile-card">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold text-slate-800 dark:text-white">Recent Activity</h2>
-              <Clock className="w-5 h-5 text-slate-500 dark:text-slate-400" />
+          <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-xl border border-white/20 dark:border-slate-700/20 p-4 sm:p-6">
+            <div className="flex items-center justify-between mb-4 sm:mb-6">
+              <h2 className="text-lg sm:text-xl font-bold text-slate-800 dark:text-white">Recent Activity</h2>
+              <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-slate-500 dark:text-slate-400" />
             </div>
             
-            <div className="space-y-3">
+            <div className="space-y-3 sm:space-y-4">
               {recentActivity.map((activity, index) => {
                 const Icon = activity.icon;
                 return (
@@ -475,14 +475,14 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.1 * index }}
                     whileHover={{ scale: 1.02, x: 8 }}
-                    className="group flex items-center p-3 bg-gradient-to-r from-white/50 to-white/30 dark:from-slate-700/50 dark:to-slate-700/30 rounded-lg border border-white/20 dark:border-slate-600/20 hover:shadow-lg transition-all duration-300"
+                    className="group flex items-center p-3 sm:p-4 bg-gradient-to-r from-white/50 to-white/30 dark:from-slate-700/50 dark:to-slate-700/30 rounded-xl sm:rounded-2xl border border-white/20 dark:border-slate-600/20 hover:shadow-lg transition-all duration-300"
                   >
-                    <div className="w-8 h-8 bg-gradient-to-r from-violet-400 to-purple-500 rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
-                      <Icon className="w-4 h-4 text-white" />
+                    <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-r from-violet-400 to-purple-500 rounded-xl sm:rounded-2xl flex items-center justify-center mr-3 sm:mr-4 group-hover:scale-110 transition-transform duration-300">
+                      <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-slate-800 dark:text-white text-sm truncate">{activity.action}</p>
-                      <p className="text-xs text-slate-500 dark:text-slate-400">{activity.time}</p>
+                      <p className="font-semibold text-slate-800 dark:text-white text-sm sm:text-base truncate">{activity.action}</p>
+                      <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{activity.time}</p>
                     </div>
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${activity.color} hidden sm:inline`}>
                       {activity.type}
@@ -494,13 +494,13 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
           </div>
 
           {/* Daily Goals */}
-          <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-xl sm:rounded-3xl shadow-xl border border-white/20 dark:border-slate-700/20 mobile-card">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold text-slate-800 dark:text-white">Daily Goals</h2>
-              <Target className="w-4 h-4 text-green-500" />
+          <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-xl border border-white/20 dark:border-slate-700/20 p-4 sm:p-6">
+            <div className="flex items-center justify-between mb-4 sm:mb-6">
+              <h2 className="text-lg sm:text-xl font-bold text-slate-800 dark:text-white">Daily Goals</h2>
+              <Target className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />
             </div>
             
-            <div className="space-y-3">
+            <div className="space-y-3 sm:space-y-4">
               {[
                 { task: 'Complete 3 reports', progress: 66, color: 'from-blue-400 to-cyan-500' },
                 { task: 'Take 10 photos', progress: 80, color: 'from-purple-400 to-pink-500' },
@@ -514,15 +514,15 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                   className="space-y-2"
                 >
                   <div className="flex justify-between items-center">
-                    <span className="text-xs font-medium text-slate-700 dark:text-slate-300 truncate pr-2">{goal.task}</span>
-                    <span className="text-xs font-bold text-slate-800 dark:text-white">{goal.progress}%</span>
+                    <span className="text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-300 truncate pr-2">{goal.task}</span>
+                    <span className="text-xs sm:text-sm font-bold text-slate-800 dark:text-white">{goal.progress}%</span>
                   </div>
-                  <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2 overflow-hidden">
+                  <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2 sm:h-3 overflow-hidden">
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${goal.progress}%` }}
                       transition={{ duration: 1, delay: 0.5 + index * 0.2 }}
-                      className={`h-2 rounded-full bg-gradient-to-r ${goal.color}`}
+                      className={`h-2 sm:h-3 rounded-full bg-gradient-to-r ${goal.color}`}
                     />
                   </div>
                 </motion.div>
@@ -546,18 +546,18 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
-              className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-xl sm:rounded-3xl shadow-2xl max-w-md w-full border border-white/20 dark:border-slate-700/20"
+              className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-2xl max-w-md w-full border border-white/20 dark:border-slate-700/20"
             >
-              <div className="p-6">
-                <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-4">Create New Note</h2>
+              <div className="p-6 sm:p-8">
+                <h2 className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white mb-4 sm:mb-6">Create New Note</h2>
                 
-                <div className="space-y-3">
+                <div className="space-y-3 sm:space-y-4">
                   <input
                     type="text"
                     placeholder="Note title"
                     value={newNote.title}
                     onChange={(e) => setNewNote({ ...newNote, title: e.target.value })}
-                    className="w-full px-4 py-3 bg-white/70 dark:bg-slate-700/60 border border-white/20 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 text-slate-800 dark:text-white"
+                    className="w-full px-4 py-3 bg-white/70 dark:bg-slate-700/60 border border-white/20 dark:border-slate-600 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 text-slate-800 dark:text-white input-mobile"
                   />
                   
                   <textarea
@@ -565,16 +565,16 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                     value={newNote.content}
                     onChange={(e) => setNewNote({ ...newNote, content: e.target.value })}
                     rows={4}
-                    className="w-full px-4 py-3 bg-white/70 dark:bg-slate-700/60 border border-white/20 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-none transition-all duration-300 text-slate-800 dark:text-white"
+                    className="w-full px-4 py-3 bg-white/70 dark:bg-slate-700/60 border border-white/20 dark:border-slate-600 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-none transition-all duration-300 text-slate-800 dark:text-white input-mobile"
                   />
                 </div>
                 
-                <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3 mt-6">
+                <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3 mt-6 sm:mt-8">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setShowNotesModal(false)}
-                    className="w-full sm:w-auto px-6 py-3 text-slate-700 dark:text-slate-300 bg-slate-200 dark:bg-slate-700 rounded-xl hover:bg-slate-300 dark:hover:bg-slate-600 transition-all duration-200 font-medium"
+                    className="w-full sm:w-auto px-6 py-3 text-slate-700 dark:text-slate-300 bg-slate-200 dark:bg-slate-700 rounded-xl sm:rounded-2xl hover:bg-slate-300 dark:hover:bg-slate-600 transition-all duration-200 font-medium btn-mobile"
                   >
                     Cancel
                   </motion.button>
@@ -582,7 +582,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={handleCreateNote}
-                    className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl hover:from-amber-600 hover:to-orange-600 transition-all duration-200 font-medium shadow-lg"
+                    className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl sm:rounded-2xl hover:from-amber-600 hover:to-orange-600 transition-all duration-200 font-medium shadow-lg btn-mobile"
                   >
                     Create Note
                   </motion.button>
@@ -606,18 +606,18 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
-              className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-xl sm:rounded-3xl shadow-2xl max-w-md w-full border border-white/20 dark:border-slate-700/20"
+              className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-2xl max-w-md w-full border border-white/20 dark:border-slate-700/20"
             >
-              <div className="p-6">
-                <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-4">Create New Report</h2>
+              <div className="p-6 sm:p-8">
+                <h2 className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white mb-4 sm:mb-6">Create New Report</h2>
                 
-                <div className="space-y-3">
+                <div className="space-y-3 sm:space-y-4">
                   <input
                     type="text"
                     placeholder="Report title"
                     value={newReport.title}
                     onChange={(e) => setNewReport({ ...newReport, title: e.target.value })}
-                    className="w-full px-4 py-3 bg-white/70 dark:bg-slate-700/60 border border-white/20 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 text-slate-800 dark:text-white"
+                    className="w-full px-4 py-3 bg-white/70 dark:bg-slate-700/60 border border-white/20 dark:border-slate-600 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 text-slate-800 dark:text-white input-mobile"
                   />
                   
                   <textarea
@@ -625,13 +625,13 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                     value={newReport.description}
                     onChange={(e) => setNewReport({ ...newReport, description: e.target.value })}
                     rows={3}
-                    className="w-full px-4 py-3 bg-white/70 dark:bg-slate-700/60 border border-white/20 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent resize-none transition-all duration-300 text-slate-800 dark:text-white"
+                    className="w-full px-4 py-3 bg-white/70 dark:bg-slate-700/60 border border-white/20 dark:border-slate-600 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent resize-none transition-all duration-300 text-slate-800 dark:text-white input-mobile"
                   />
                   
                   <select
                     value={newReport.type}
                     onChange={(e) => setNewReport({ ...newReport, type: e.target.value as 'text' | 'photo' | 'mixed' })}
-                    className="w-full px-4 py-3 bg-white/70 dark:bg-slate-700/60 border border-white/20 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 text-slate-800 dark:text-white"
+                    className="w-full px-4 py-3 bg-white/70 dark:bg-slate-700/60 border border-white/20 dark:border-slate-600 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 text-slate-800 dark:text-white input-mobile"
                   >
                     <option value="text">Text Only</option>
                     <option value="photo">Photo Only</option>
@@ -639,12 +639,12 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                   </select>
                 </div>
                 
-                <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3 mt-6">
+                <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3 mt-6 sm:mt-8">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setShowReportsModal(false)}
-                    className="w-full sm:w-auto px-6 py-3 text-slate-700 dark:text-slate-300 bg-slate-200 dark:bg-slate-700 rounded-xl hover:bg-slate-300 dark:hover:bg-slate-600 transition-all duration-200 font-medium"
+                    className="w-full sm:w-auto px-6 py-3 text-slate-700 dark:text-slate-300 bg-slate-200 dark:bg-slate-700 rounded-xl sm:rounded-2xl hover:bg-slate-300 dark:hover:bg-slate-600 transition-all duration-200 font-medium btn-mobile"
                   >
                     Cancel
                   </motion.button>
@@ -652,7 +652,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={handleCreateReport}
-                    className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-emerald-500 to-green-500 text-white rounded-xl hover:from-emerald-600 hover:to-green-600 transition-all duration-200 font-medium shadow-lg"
+                    className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-emerald-500 to-green-500 text-white rounded-xl sm:rounded-2xl hover:from-emerald-600 hover:to-green-600 transition-all duration-200 font-medium shadow-lg btn-mobile"
                   >
                     Create Report
                   </motion.button>
@@ -676,18 +676,18 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
-              className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-xl sm:rounded-3xl shadow-2xl max-w-md w-full border border-white/20 dark:border-slate-700/20"
+              className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-2xl max-w-md w-full border border-white/20 dark:border-slate-700/20"
             >
-              <div className="p-6">
-                <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-4">Create New Event</h2>
+              <div className="p-6 sm:p-8">
+                <h2 className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white mb-4 sm:mb-6">Create New Event</h2>
                 
-                <div className="space-y-3">
+                <div className="space-y-3 sm:space-y-4">
                   <input
                     type="text"
                     placeholder="Event title"
                     value={newEvent.title}
                     onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
-                    className="w-full px-4 py-3 bg-white/70 dark:bg-slate-700/60 border border-white/20 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300 text-slate-800 dark:text-white"
+                    className="w-full px-4 py-3 bg-white/70 dark:bg-slate-700/60 border border-white/20 dark:border-slate-600 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300 text-slate-800 dark:text-white input-mobile"
                   />
                   
                   <div className="grid grid-cols-2 gap-3">
@@ -695,20 +695,20 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                       type="date"
                       value={newEvent.date}
                       onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value })}
-                      className="px-4 py-3 bg-white/70 dark:bg-slate-700/60 border border-white/20 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300 text-slate-800 dark:text-white"
+                      className="px-4 py-3 bg-white/70 dark:bg-slate-700/60 border border-white/20 dark:border-slate-600 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300 text-slate-800 dark:text-white input-mobile"
                     />
                     <input
                       type="time"
                       value={newEvent.time}
                       onChange={(e) => setNewEvent({ ...newEvent, time: e.target.value })}
-                      className="px-4 py-3 bg-white/70 dark:bg-slate-700/60 border border-white/20 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300 text-slate-800 dark:text-white"
+                      className="px-4 py-3 bg-white/70 dark:bg-slate-700/60 border border-white/20 dark:border-slate-600 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300 text-slate-800 dark:text-white input-mobile"
                     />
                   </div>
                   
                   <select
                     value={newEvent.type}
                     onChange={(e) => setNewEvent({ ...newEvent, type: e.target.value as 'meeting' | 'task' | 'reminder' })}
-                    className="w-full px-4 py-3 bg-white/70 dark:bg-slate-700/60 border border-white/20 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300 text-slate-800 dark:text-white"
+                    className="w-full px-4 py-3 bg-white/70 dark:bg-slate-700/60 border border-white/20 dark:border-slate-600 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300 text-slate-800 dark:text-white input-mobile"
                   >
                     <option value="meeting">Meeting</option>
                     <option value="task">Task</option>
@@ -716,12 +716,12 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                   </select>
                 </div>
                 
-                <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3 mt-6">
+                <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3 mt-6 sm:mt-8">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setShowCalendarModal(false)}
-                    className="w-full sm:w-auto px-6 py-3 text-slate-700 dark:text-slate-300 bg-slate-200 dark:bg-slate-700 rounded-xl hover:bg-slate-300 dark:hover:bg-slate-600 transition-all duration-200 font-medium"
+                    className="w-full sm:w-auto px-6 py-3 text-slate-700 dark:text-slate-300 bg-slate-200 dark:bg-slate-700 rounded-xl sm:rounded-2xl hover:bg-slate-300 dark:hover:bg-slate-600 transition-all duration-200 font-medium btn-mobile"
                   >
                     Cancel
                   </motion.button>
@@ -729,7 +729,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={handleCreateEvent}
-                    className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl hover:from-cyan-600 hover:to-blue-600 transition-all duration-200 font-medium shadow-lg"
+                    className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl sm:rounded-2xl hover:from-cyan-600 hover:to-blue-600 transition-all duration-200 font-medium shadow-lg btn-mobile"
                   >
                     Create Event
                   </motion.button>

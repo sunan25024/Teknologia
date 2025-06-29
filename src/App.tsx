@@ -161,14 +161,16 @@ function App() {
       <AnimatePresence mode="wait">
         <motion.div
           key={currentView}
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 1.05 }}
+          initial={{ opacity: 0, scale: 0.95, rotateX: -10 }}
+          animate={{ opacity: 1, scale: 1, rotateX: 0 }}
+          exit={{ opacity: 0, scale: 1.05, rotateX: 10 }}
           transition={{ 
-            duration: 0.3, 
-            ease: "easeInOut"
+            duration: 0.4, 
+            ease: [0.25, 0.46, 0.45, 0.94],
+            type: "spring",
+            stiffness: 100
           }}
-          className="h-full overflow-hidden"
+          className="h-full"
         >
           {views[currentView]}
         </motion.div>
@@ -190,7 +192,7 @@ function App() {
   }
 
   return (
-    <div className={`min-h-screen min-h-[calc(var(--vh,1vh)*100)] transition-all duration-500 overflow-hidden ${
+    <div className={`min-h-screen min-h-[calc(var(--vh,1vh)*100)] transition-all duration-500 ${
       isDarkMode 
         ? 'bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900' 
         : 'bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50'
@@ -200,9 +202,9 @@ function App() {
         <div className={`absolute top-0 left-0 w-full h-full opacity-30 ${
           isDarkMode ? 'bg-gradient-to-br from-purple-600/20 to-pink-600/20' : 'bg-gradient-to-br from-blue-300/20 to-purple-300/20'
         }`}>
-          <div className="absolute top-1/4 left-1/4 w-32 sm:w-96 h-32 sm:h-96 bg-gradient-to-r from-violet-400 to-purple-400 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
-          <div className="absolute top-3/4 right-1/4 w-32 sm:w-96 h-32 sm:h-96 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full mix-blend-multiply filter blur-3xl animate-pulse animation-delay-2000"></div>
-          <div className="absolute bottom-1/4 left-1/2 w-32 sm:w-96 h-32 sm:h-96 bg-gradient-to-r from-pink-400 to-rose-400 rounded-full mix-blend-multiply filter blur-3xl animate-pulse animation-delay-4000"></div>
+          <div className="absolute top-1/4 left-1/4 w-48 sm:w-96 h-48 sm:h-96 bg-gradient-to-r from-violet-400 to-purple-400 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
+          <div className="absolute top-3/4 right-1/4 w-48 sm:w-96 h-48 sm:h-96 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full mix-blend-multiply filter blur-3xl animate-pulse animation-delay-2000"></div>
+          <div className="absolute bottom-1/4 left-1/2 w-48 sm:w-96 h-48 sm:h-96 bg-gradient-to-r from-pink-400 to-rose-400 rounded-full mix-blend-multiply filter blur-3xl animate-pulse animation-delay-4000"></div>
         </div>
       </div>
 
@@ -222,32 +224,32 @@ function App() {
         <motion.div
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="fixed bottom-20 sm:bottom-24 left-2 right-2 z-40"
+          className="fixed bottom-20 sm:bottom-24 left-4 right-4 z-40"
         >
-          <div className={`rounded-xl p-3 shadow-2xl border mobile-card ${
+          <div className={`rounded-2xl p-4 shadow-2xl border ${
             isDarkMode 
               ? 'bg-slate-800/90 border-slate-700' 
               : 'bg-white/90 border-white/50'
           }`}>
             <div className="flex items-center justify-between">
-              <div className="flex-1 min-w-0">
+              <div className="flex-1">
                 <h3 className={`font-bold text-sm ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>
                   Install ProductiveHub
                 </h3>
                 <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                  Add to home screen
+                  Add to home screen for better experience
                 </p>
               </div>
-              <div className="flex space-x-2 ml-2">
+              <div className="flex space-x-2">
                 <button
                   onClick={() => setShowInstallPrompt(false)}
-                  className="px-2 py-1 text-xs text-slate-500 hover:text-slate-700 transition-colors"
+                  className="px-3 py-1 text-xs text-slate-500 hover:text-slate-700 transition-colors"
                 >
                   Later
                 </button>
                 <button
                   onClick={handleInstallPWA}
-                  className="px-3 py-1 bg-gradient-to-r from-violet-500 to-purple-600 text-white text-xs rounded-lg font-medium"
+                  className="px-4 py-2 bg-gradient-to-r from-violet-500 to-purple-600 text-white text-xs rounded-xl font-medium"
                 >
                   Install
                 </button>
@@ -257,8 +259,8 @@ function App() {
         </motion.div>
       )}
 
-      {/* Main App Container */}
-      <div className="relative z-10 min-h-screen min-h-[calc(var(--vh,1vh)*100)] flex flex-col overflow-hidden">
+      {/* Glass Morphism Container */}
+      <div className="relative z-10 min-h-screen min-h-[calc(var(--vh,1vh)*100)] flex flex-col">
         {/* Top Navigation */}
         <TopNavigation 
           currentView={currentView} 
@@ -268,8 +270,8 @@ function App() {
         />
         
         {/* Main Content Area */}
-        <main className="flex-1 mobile-container pb-20 sm:pb-24 pt-2 overflow-hidden">
-          <div className={`h-full rounded-xl sm:rounded-3xl backdrop-blur-2xl border shadow-2xl overflow-hidden ${
+        <main className="flex-1 px-2 sm:px-4 pb-20 sm:pb-24 pt-2 sm:pt-4 overflow-hidden">
+          <div className={`h-full rounded-2xl sm:rounded-3xl backdrop-blur-2xl border shadow-2xl overflow-hidden ${
             isDarkMode 
               ? 'bg-slate-800/40 border-slate-700/50' 
               : 'bg-white/40 border-white/50'
