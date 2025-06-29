@@ -2,9 +2,7 @@ const CACHE_NAME = 'productivehub-v1.0.0';
 const urlsToCache = [
   '/',
   '/manifest.json',
-  '/icon-72x72.png',
-  '/icon-192x192.png',
-  '/icon-512x512.png'
+  '/icon-72x72.png'
 ];
 
 // Install event
@@ -13,14 +11,7 @@ self.addEventListener('install', (event) => {
     caches.open(CACHE_NAME)
       .then((cache) => {
         console.log('Opened cache');
-        // Only cache files that actually exist
-        return cache.addAll(urlsToCache.filter(url => {
-          // Skip files that might not exist
-          if (url.includes('icon-') && !url.includes('icon-72x72.png')) {
-            return false;
-          }
-          return true;
-        }));
+        return cache.addAll(urlsToCache);
       })
       .catch((error) => {
         console.log('Cache addAll failed:', error);
@@ -41,17 +32,14 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
-        // Return cached version or fetch from network
         if (response) {
           return response;
         }
         return fetch(event.request).then((response) => {
-          // Check if we received a valid response
           if (!response || response.status !== 200 || response.type !== 'basic') {
             return response;
           }
 
-          // Clone the response
           const responseToCache = response.clone();
 
           caches.open(CACHE_NAME)
@@ -61,7 +49,6 @@ self.addEventListener('fetch', (event) => {
 
           return response;
         }).catch(() => {
-          // Return offline page or fallback
           if (event.request.destination === 'document') {
             return caches.match('/');
           }
@@ -137,7 +124,6 @@ self.addEventListener('notificationclick', (event) => {
 
 function doBackgroundSync() {
   return new Promise((resolve) => {
-    // Perform background sync operations
     console.log('Background sync performed');
     resolve();
   });
