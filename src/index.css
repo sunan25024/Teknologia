@@ -539,3 +539,151 @@ input, textarea, select {
     padding: 1.5rem;
   }
 }
+
+/* Responsive breakpoints for better mobile experience */
+@media (max-width: 475px) {
+  .xs\:hidden {
+    display: none;
+  }
+  
+  .xs\:block {
+    display: block;
+  }
+  
+  .xs\:flex {
+    display: flex;
+  }
+  
+  .xs\:grid {
+    display: grid;
+  }
+}
+
+/* Better mobile navigation */
+@media (max-width: 640px) {
+  .mobile-nav-compact {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .mobile-nav-text {
+    font-size: 0.75rem;
+  }
+}
+
+/* Improved touch feedback */
+@media (hover: none) and (pointer: coarse) {
+  button:hover {
+    transform: none;
+  }
+  
+  button:active {
+    transform: scale(0.95);
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Better modal sizing on mobile */
+@media (max-width: 640px) {
+  .modal-mobile {
+    margin: 1rem;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+  }
+}
+
+/* Improved grid layouts for mobile */
+@media (max-width: 640px) {
+  .grid-mobile-1 {
+    grid-template-columns: 1fr;
+  }
+  
+  .grid-mobile-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Better text scaling */
+@media (max-width: 640px) {
+  .text-scale-mobile {
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+  }
+  
+  .text-scale-mobile-lg {
+    font-size: clamp(1rem, 3vw, 1.25rem);
+  }
+  
+  .text-scale-mobile-xl {
+    font-size: clamp(1.25rem, 4vw, 1.5rem);
+  }
+}
+
+/* Enhanced safe area handling */
+@supports (padding: max(0px)) {
+  .safe-area-inset-top {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+  
+  .safe-area-inset-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+  
+  .safe-area-inset-left {
+    padding-left: max(1rem, env(safe-area-inset-left));
+  }
+  
+  .safe-area-inset-right {
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+}
+
+/* Better focus management for mobile */
+@media (max-width: 768px) {
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+}
+
+/* Improved button sizing for touch */
+.btn-touch {
+  min-height: 48px;
+  min-width: 48px;
+  padding: 0.75rem 1rem;
+}
+
+@media (max-width: 640px) {
+  .btn-touch {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.625rem 0.875rem;
+  }
+}
+
+/* Better card spacing on mobile */
+@media (max-width: 640px) {
+  .card-mobile {
+    margin: 0.5rem;
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+}
+
+/* Enhanced scrolling for mobile */
+.scroll-mobile {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+}
+
+/* Better typography for mobile */
+@media (max-width: 640px) {
+  .text-mobile-tight {
+    line-height: 1.25;
+  }
+  
+  .text-mobile-relaxed {
+    line-height: 1.6;
+  }
+}
