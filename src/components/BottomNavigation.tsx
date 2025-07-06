@@ -55,10 +55,10 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
                 whileHover={{ scale: isCenter ? 1.1 : 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setCurrentView(item.id)}
-                className={`relative flex flex-col items-center rounded-2xl transition-all duration-300 ${
+                className={`relative flex flex-col items-center rounded-xl sm:rounded-2xl transition-all duration-300 min-h-[44px] min-w-[44px] ${
                   isCenter 
-                    ? 'p-2 sm:p-4 transform -translate-y-1 sm:-translate-y-2' 
-                    : 'p-2 sm:p-3'
+                    ? 'p-2 sm:p-3 transform -translate-y-1 sm:-translate-y-2' 
+                    : 'p-1.5 sm:p-2'
                 } ${
                   isActive 
                     ? 'transform -translate-y-1' 
@@ -69,7 +69,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
                 {isActive && (
                   <motion.div
                     layoutId="activeTab"
-                    className={`absolute inset-0 rounded-2xl shadow-lg ${
+                    className={`absolute inset-0 rounded-xl sm:rounded-2xl shadow-lg ${
                       isCenter 
                         ? 'bg-gradient-to-r from-purple-500 to-pink-500' 
                         : 'bg-gradient-to-r from-violet-500 to-purple-500'
@@ -81,14 +81,14 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
                 
                 {/* Center Camera Special Styling */}
                 {isCenter && !isActive && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl shadow-lg opacity-80" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl sm:rounded-2xl shadow-lg opacity-80" />
                 )}
                 
                 {/* Icon */}
-                <div className={`relative z-10 rounded-xl transition-all duration-300 ${
+                <div className={`relative z-10 rounded-lg sm:rounded-xl transition-all duration-300 flex items-center justify-center ${
                   isCenter 
-                    ? 'p-2 sm:p-3' 
-                    : 'p-1 sm:p-2'
+                    ? 'p-1.5 sm:p-2' 
+                    : 'p-1 sm:p-1.5'
                 } ${
                   isActive || isCenter
                     ? 'text-white' 
@@ -96,11 +96,11 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
                       ? 'text-slate-400 hover:text-white' 
                       : 'text-slate-600 hover:text-slate-800'
                 }`}>
-                  <Icon className={`${isCenter ? 'w-5 h-5 sm:w-7 sm:h-7' : 'w-4 h-4 sm:w-5 sm:h-5'}`} />
+                  <Icon className={`${isCenter ? 'w-5 h-5 sm:w-6 sm:h-6' : 'w-4 h-4 sm:w-5 sm:h-5'}`} />
                 </div>
                 
                 {/* Label */}
-                <span className={`relative z-10 text-xs font-medium mt-1 transition-all duration-300 ${
+                <span className={`relative z-10 text-xs font-medium mt-0.5 sm:mt-1 transition-all duration-300 ${
                   isActive || isCenter
                     ? 'text-white' 
                     : isDarkMode 
@@ -115,7 +115,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full"
+                    className="absolute -top-0.5 sm:-top-1 left-1/2 transform -translate-x-1/2 w-1 h-1 sm:w-1.5 sm:h-1.5 bg-white rounded-full"
                   />
                 )}
 
@@ -130,7 +130,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
                       ]
                     }}
                     transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute inset-0 rounded-2xl"
+                    className="absolute inset-0 rounded-xl sm:rounded-2xl"
                   />
                 )}
               </motion.button>
