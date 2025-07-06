@@ -14,6 +14,7 @@ import FloatingActionButton from './components/FloatingActionButton';
 import LandingPage from './components/LandingPage';
 import LoadingScreen from './components/LoadingScreen';
 import SplashScreen from './components/SplashScreen';
+import InstallPrompt from './components/InstallPrompt';
 
 export type ViewType = 'dashboard' | 'notes' | 'reports' | 'calendar' | 'camera' | 'spreadsheet' | 'whatsapp' | 'settings';
 
@@ -28,13 +29,33 @@ function App() {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
+  const [isStandalone, setIsStandalone] = useState(false);
+
+  // Check if app is running in standalone mode (already installed)
+  useEffect(() => {
+    const checkStandalone = () => {
+      const isStandaloneMode = window.matchMedia('(display-mode: standalone)').matches ||
+                              (window.navigator as any).standalone ||
+                              document.referrer.includes('android-app://');
+      setIsStandalone(isStandaloneMode);
+    };
+
+    checkStandalone();
+    window.addEventListener('resize', checkStandalone);
+    return () => window.removeEventListener('resize', checkStandalone);
+  }, []);
 
   // PWA Install Prompt
   useEffect(() => {
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e);
-      setShowInstallPrompt(true);
+      // Show install prompt after a delay if not in standalone mode
+      if (!isStandalone) {
+        setTimeout(() => {
+          setShowInstallPrompt(true);
+        }, 3000);
+      }
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -42,7 +63,7 @@ function App() {
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
     };
-  }, []);
+  }, [isStandalone]);
 
   // Online/Offline Detection
   useEffect(() => {
@@ -90,6 +111,7 @@ function App() {
       const { outcome } = await deferredPrompt.userChoice;
       if (outcome === 'accepted') {
         setShowInstallPrompt(false);
+        setIsStandalone(true);
       }
       setDeferredPrompt(null);
     }
@@ -202,9 +224,9 @@ function App() {
         <div className={`absolute top-0 left-0 w-full h-full opacity-30 ${
           isDarkMode ? 'bg-gradient-to-br from-purple-600/20 to-pink-600/20' : 'bg-gradient-to-br from-blue-300/20 to-purple-300/20'
         }`}>
-          <div className="absolute top-1/4 left-1/4 w-48 sm:w-96 h-48 sm:h-96 bg-gradient-to-r from-violet-400 to-purple-400 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
-          <div className="absolute top-3/4 right-1/4 w-48 sm:w-96 h-48 sm:h-96 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full mix-blend-multiply filter blur-3xl animate-pulse animation-delay-2000"></div>
-          <div className="absolute bottom-1/4 left-1/2 w-48 sm:w-96 h-48 sm:h-96 bg-gradient-to-r from-pink-400 to-rose-400 rounded-full mix-blend-multiply filter blur-3xl animate-pulse animation-delay-4000"></div>
+          <div className="absolute top-1/4 left-1/4 w-32 sm:w-48 lg:w-96 h-32 sm:h-48 lg:h-96 bg-gradient-to-r from-violet-400 to-purple-400 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
+          <div className="absolute top-3/4 right-1/4 w-32 sm:w-48 lg:w-96 h-32 sm:h-48 lg:h-96 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full mix-blend-multiply filter blur-3xl animate-pulse animation-delay-2000"></div>
+          <div className="absolute bottom-1/4 left-1/2 w-32 sm:w-48 lg:w-96 h-32 sm:h-48 lg:h-96 bg-gradient-to-r from-pink-400 to-rose-400 rounded-full mix-blend-multiply filter blur-3xl animate-pulse animation-delay-4000"></div>
         </div>
       </div>
 
@@ -213,51 +235,19 @@ function App() {
         <motion.div
           initial={{ y: -100 }}
           animate={{ y: 0 }}
-          className="fixed top-0 left-0 right-0 z-50 bg-red-500 text-white text-center py-2 text-sm font-medium"
+          className="fixed top-0 left-0 right-0 z-50 bg-red-500 text-white text-center py-2 text-sm font-medium safe-area-pt"
         >
           You're offline. Some features may not work.
         </motion.div>
       )}
 
-      {/* PWA Install Prompt */}
-      {showInstallPrompt && (
-        <motion.div
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          className="fixed bottom-20 sm:bottom-24 left-4 right-4 z-40"
-        >
-          <div className={`rounded-2xl p-4 shadow-2xl border ${
-            isDarkMode 
-              ? 'bg-slate-800/90 border-slate-700' 
-              : 'bg-white/90 border-white/50'
-          }`}>
-            <div className="flex items-center justify-between">
-              <div className="flex-1">
-                <h3 className={`font-bold text-sm ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>
-                  Install ProductiveHub
-                </h3>
-                <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                  Add to home screen for better experience
-                </p>
-              </div>
-              <div className="flex space-x-2">
-                <button
-                  onClick={() => setShowInstallPrompt(false)}
-                  className="px-3 py-1 text-xs text-slate-500 hover:text-slate-700 transition-colors"
-                >
-                  Later
-                </button>
-                <button
-                  onClick={handleInstallPWA}
-                  className="px-4 py-2 bg-gradient-to-r from-violet-500 to-purple-600 text-white text-xs rounded-xl font-medium"
-                >
-                  Install
-                </button>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      )}
+      {/* Install Prompt Component */}
+      <InstallPrompt
+        show={showInstallPrompt && !isStandalone}
+        onInstall={handleInstallPWA}
+        onDismiss={() => setShowInstallPrompt(false)}
+        isDarkMode={isDarkMode}
+      />
 
       {/* Glass Morphism Container */}
       <div className="relative z-10 min-h-screen min-h-[calc(var(--vh,1vh)*100)] flex flex-col">
@@ -270,8 +260,8 @@ function App() {
         />
         
         {/* Main Content Area */}
-        <main className="flex-1 px-2 sm:px-4 pb-20 sm:pb-24 pt-2 sm:pt-4 overflow-hidden">
-          <div className={`h-full rounded-2xl sm:rounded-3xl backdrop-blur-2xl border shadow-2xl overflow-hidden ${
+        <main className="flex-1 px-1 sm:px-2 lg:px-4 pb-16 sm:pb-20 lg:pb-24 pt-1 sm:pt-2 overflow-hidden">
+          <div className={`h-full rounded-xl sm:rounded-2xl lg:rounded-3xl backdrop-blur-2xl border shadow-2xl overflow-hidden ${
             isDarkMode 
               ? 'bg-slate-800/40 border-slate-700/50' 
               : 'bg-white/40 border-white/50'
