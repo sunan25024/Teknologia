@@ -163,9 +163,6 @@ export default {
           'min-width': '44px',
           'touch-action': 'manipulation',
           '-webkit-tap-highlight-color': 'transparent',
-          'display': 'flex',
-          'align-items': 'center',
-          'justify-content': 'center',
         },
         '.input-mobile': {
           'font-size': '16px',
@@ -178,21 +175,6 @@ export default {
           'padding-right': 'env(safe-area-inset-right)',
           'padding-bottom': 'env(safe-area-inset-bottom)',
           'padding-left': 'env(safe-area-inset-left)',
-        },
-        '.mobile-responsive': {
-          '@media (max-width: 640px)': {
-            'padding': '0.5rem',
-            'font-size': '0.875rem',
-          },
-        },
-        '.grid-mobile-responsive': {
-          'display': 'grid',
-          'grid-template-columns': 'repeat(auto-fit, minmax(280px, 1fr))',
-          'gap': '1rem',
-          '@media (max-width: 640px)': {
-            'grid-template-columns': '1fr',
-            'gap': '0.75rem',
-          },
         },
       }
       
